@@ -70,3 +70,14 @@ class TerminalSession:
 
     def inject_command(self, cmd: str):
         self.write(cmd + "\r")
+
+
+# Global singleton for stage-auto-inject
+_terminal: "TerminalSession | None" = None
+
+def get_terminal() -> "TerminalSession | None":
+    return _terminal
+
+def set_terminal(session: "TerminalSession"):
+    global _terminal
+    _terminal = session

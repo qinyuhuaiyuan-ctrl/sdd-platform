@@ -7,7 +7,7 @@ from routers.git import router as git_router
 from routers.stages import router as stages_router
 from routers.skills import router as skills_router
 from routers.templates import router as templates_router
-from services.terminal_service import TerminalSession
+from services.terminal_service import TerminalSession, set_terminal
 
 app = FastAPI(title="SDD Platform")
 
@@ -33,6 +33,7 @@ async def terminal_ws(ws: WebSocket):
 
     if terminal_session.process is None:
         terminal_session.start()
+        set_terminal(terminal_session)
 
     # Auto-inject current stage skill on connect
     from services.stage_service import get_stages
