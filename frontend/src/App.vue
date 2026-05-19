@@ -6,7 +6,14 @@
     </div>
     <div class="content">
       <div class="panel-left">
-        <div class="panel-placeholder">资产树</div>
+        <AssetTree
+          :fileTree="fileTree"
+          :activeFile="currentFile"
+          @refresh="refreshFileTree"
+          @select-file="onSelectFile"
+          @select-skill-file="onSelectSkillFile"
+          @select-template="onSelectTemplate"
+        />
       </div>
       <div class="panel-center">
         <div class="panel-placeholder">查看/编辑器</div>
@@ -22,9 +29,22 @@
 import { onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
 import StageProgressBar from './components/StageProgressBar.vue'
+import AssetTree from './components/AssetTree.vue'
 import { useStages } from './composables/useStages.js'
+import { useFiles } from './composables/useFiles.js'
 
 const { stages, fetchStages } = useStages()
+const { fileTree, currentFile, refreshFileTree, openFile } = useFiles()
+
+function onSelectFile(item) {
+  openFile(item.path)
+}
+function onSelectSkillFile(stage, file) {
+  openFile('skills/' + stage + '/' + file)
+}
+function onSelectTemplate(type) {
+  openFile('templates/' + type)
+}
 onMounted(() => { fetchStages() })
 </script>
 
