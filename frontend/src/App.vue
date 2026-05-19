@@ -24,7 +24,7 @@
         />
       </div>
       <div class="panel-right">
-        <div class="panel-placeholder">终端</div>
+        <TerminalPanel />
       </div>
     </div>
   </div>
@@ -36,6 +36,7 @@ import NavBar from './components/NavBar.vue'
 import StageProgressBar from './components/StageProgressBar.vue'
 import AssetTree from './components/AssetTree.vue'
 import ViewerEditor from './components/ViewerEditor.vue'
+import TerminalPanel from './components/TerminalPanel.vue'
 import { useStages } from './composables/useStages.js'
 import { useFiles } from './composables/useFiles.js'
 
@@ -77,8 +78,4 @@ onMounted(() => { fetchStages() })
 .panel-left { width: 260px; border-right: 1px solid #313244; }
 .panel-center { flex: 1; border-right: 1px solid #313244; }
 .panel-right { width: 450px; }
-.panel-placeholder {
-  padding: 16px;
-  color: #6c7086;
-}
 </style>
