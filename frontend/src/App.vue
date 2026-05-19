@@ -2,7 +2,7 @@
   <NavBar />
   <div class="app-body">
     <div class="stage-area">
-      <div class="stage-placeholder">阶段进度条</div>
+      <StageProgressBar :stages="stages" />
     </div>
     <div class="content">
       <div class="panel-left">
@@ -19,7 +19,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import NavBar from './components/NavBar.vue'
+import StageProgressBar from './components/StageProgressBar.vue'
+import { useStages } from './composables/useStages.js'
+
+const { stages, fetchStages } = useStages()
+onMounted(() => { fetchStages() })
 </script>
 
 <style>
