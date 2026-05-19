@@ -16,7 +16,12 @@
         />
       </div>
       <div class="panel-center">
-        <div class="panel-placeholder">查看/编辑器</div>
+        <ViewerEditor
+          :filePath="currentFile"
+          :content="fileContent"
+          :readonly="isReadonly"
+          @save="onSaveFile"
+        />
       </div>
       <div class="panel-right">
         <div class="panel-placeholder">终端</div>
@@ -26,15 +31,16 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import NavBar from './components/NavBar.vue'
 import StageProgressBar from './components/StageProgressBar.vue'
 import AssetTree from './components/AssetTree.vue'
+import ViewerEditor from './components/ViewerEditor.vue'
 import { useStages } from './composables/useStages.js'
 import { useFiles } from './composables/useFiles.js'
 
 const { stages, fetchStages } = useStages()
-const { fileTree, currentFile, refreshFileTree, openFile } = useFiles()
+const { fileTree, currentFile, fileContent, loading, refreshFileTree, openFile, saveFile } = useFiles()
 
 function onSelectFile(item) {
   openFile(item.path)
@@ -45,6 +51,14 @@ function onSelectSkillFile(stage, file) {
 function onSelectTemplate(type) {
   openFile('templates/' + type)
 }
+const isReadonly = computed(() => false)
+
+function onSaveFile(content) {
+  if (currentFile.value) {
+    saveFile(currentFile.value, content)
+  }
+}
+
 onMounted(() => { fetchStages() })
 </script>
 
