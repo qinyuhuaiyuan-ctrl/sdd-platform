@@ -18,7 +18,7 @@ async def list_skills():
         if skill_dir.exists():
             for f in skill_dir.rglob("*"):
                 if f.is_file():
-                    files.append(str(f.relative_to(SKILLS_DIR)))
+                    files.append(str(f.relative_to(skill_dir)))
         skills.append({"name": name, "files": files})
     return {"skills": skills}
 
